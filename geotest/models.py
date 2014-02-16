@@ -2,16 +2,18 @@ from django.contrib.gis.db import models
 
 class Friend(models.Model):
   '''A friend'''
-  first_name = models.CharField(max_length=16, blank=False)
-  last_name = models.CharField(max_length=16, blank=False)
 
-
-class House(models.Model):
   # Custom GeoDjango manager
   objects = models.GeoManager()
+
+  first_name = models.CharField(max_length=16, blank=False)
+  last_name = models.CharField(max_length=16)
   
-  # Fields
-  city = models.CharField(max_length=16, blank=False)
-  friend = models.ForeignKey(Friend)
+  # Where does your friend live?
+  street_address = models.CharField(max_length=16)
+  city = models.CharField(max_length=16)
   location = models.PointField(geography=True)
+
+  def __unicode__(self):
+     return self.first_name
 
